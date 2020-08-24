@@ -16,12 +16,6 @@ import com.wyj.springboot.im.sockethandler.room.RoomContext;
 import com.wyj.springboot.im.socketnio.NettySocketServer;
 import com.wyj.springboot.im.tools.StringUtil;
 
-/**
- * 
- * @author wuyingjie
- * @date 2017年11月24日
- */
-
 @Component
 public class SocketRoomHandler {
 
@@ -29,13 +23,11 @@ public class SocketRoomHandler {
 	
 	private SocketIOServer server;
 	
-	
 	@Autowired
 	public SocketRoomHandler(NettySocketServer server) {
 		this.server = server.getServer();
 	}
-	
-	
+
 	@OnEvent(value="createRoom")
 	public void createRoom(SocketIOClient client, Object data, AckRequest request) {
 		UserInCache userInCache = SocketConnectedHandler.clientMap.get(client.getSessionId().toString());

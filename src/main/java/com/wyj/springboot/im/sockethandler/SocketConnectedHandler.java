@@ -29,12 +29,6 @@ import com.wyj.springboot.im.sockethandler.entity.UserInCache;
 import com.wyj.springboot.im.socketnio.NettySocketServer;
 import com.wyj.springboot.im.tools.StringUtil;
 
-/**
- * 
- * @author wuyingjie
- * @date 2017年11月23日
- */
-
 @Component
 public class SocketConnectedHandler {
 
@@ -86,13 +80,11 @@ public class SocketConnectedHandler {
 	
 	@OnEvent("ackTest")
 	public void test(SocketIOClient client, AckRequest request) {
-		//[object Object]
 		request.sendAckData(ResponseBean.crtSuccessBean());
 	}
 	
 	@OnEvent("ackTest2")
 	public void test2(SocketIOClient client, AckRequest request) {
-		//{"msg":"ok","code":"0"}
 		request.sendAckData(ResponseBean.crtSuccessResult());
 	}
 

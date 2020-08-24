@@ -2,38 +2,16 @@ package com.wyj.springboot.im.socketnio;
 
 import javax.annotation.PostConstruct;
 
+import com.corundumstudio.socketio.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.corundumstudio.socketio.AuthorizationListener;
-import com.corundumstudio.socketio.Configuration;
-import com.corundumstudio.socketio.HandshakeData;
-import com.corundumstudio.socketio.SocketIOServer;
 import com.wyj.springboot.im.authorize.cookie.HeaderFactory;
 import com.wyj.springboot.im.authorize.cookie.UserHeaderContainer;
 
-/**
- * 
- * @author wuyingjie
- * @date 2017年11月8日
- */
-
-
-
-//之前采用这种方式注入，然后该类里面的成员总是为null
-//	我现在只想说， 这TMD 不是废话么！！！能TM有值么！！ 对象你都实例化完成了，注入到系统中了，你还让系统怎么给这个对象赋值，使用@Component完成注入
-//@Bean
-//public NettySocketServer socketServer() {
-//	return new NettySocketServer();
-//}
-
-//我真的只想说 卧槽 卧槽  卧槽！！！
-//我tm在构造方法中使用成员变量  还tm问 为什么一直为空，当然tmd为空了，对象还没初始化完呢，怎么能初始化里面的成员变量，真tmd愚啊，后来使用了@PostConstruct注解 解决了该问题 另外一个是@PreDestroy
-
 @Component
-//@PropertySource("classpath:redis.properties")
 public class NettySocketServer {
 	private static final Logger logger = LoggerFactory.getLogger(NettySocketServer.class);
 	
@@ -49,24 +27,29 @@ public class NettySocketServer {
 		Configuration config = new Configuration();
 		config.setHostname(host);
 		config.setPort(port);
+//		config.setTransports(Transport.POLLING, Transport.WEBSOCKET);
+//		config.setOrigin(":*:");
+
 		System.out.println("SocketServer start at host:"+host+", port:"+port);
 		
 		config.setAuthorizationListener(new AuthorizationListener() {
-			
 			@Override
 			public boolean isAuthorized(HandshakeData data) {
+                System.out.println("000000000000");
+				return false;
+//			    throw new RuntimeException("认证失败");
+//              return false;
 //				String token = data.getHttpHeaders().get(HeaderFactory.HEADER_KEY_USER_TOKEN);
-				String token = data.getSingleUrlParam(HeaderFactory.HEADER_KEY_USER_TOKEN);
-				UserHeaderContainer container = UserHeaderContainer.resolveUserCookie(token);
-				
-				if (container.getUserId() <= 0) {
-					logger.info("websocket握手失败  验证用户身份失败，container:{}", container);
-					return false;
-				} else {
-					logger.info("websocket握手成功  login!!! id:{}, uuid:{}", container.getUserId(), container.getUuid());
-					return true;
-				}
-				
+//				String token = data.getSingleUrlParam(HeaderFactory.HEADER_KEY_USER_TOKEN);
+//				// 解析token, 获取用户ID
+//				UserHeaderContainer container = UserHeaderContainer.resolveUserCookie(token);
+//				if (container.getUserId() <= 0) {
+//					logger.info("websocket握手失败  验证用户身份失败，container:{}", container);
+//					return false;
+//				} else {
+//					logger.info("websocket握手成功  login!!! id:{}, uuid:{}", container.getUserId(), container.getUuid());
+//					return true;
+//				}
 			}
 		});
 		

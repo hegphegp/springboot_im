@@ -21,12 +21,6 @@ import com.wyj.springboot.im.entity.User;
 import com.wyj.springboot.im.sockethandler.entity.UserInCache;
 import com.wyj.springboot.im.socketnio.NettySocketServer;
 
-/**
- * 
- * @author wuyingjie
- * @date 2017年11月8日
- */
-
 @Component
 public class SocketMessageHandler {
 

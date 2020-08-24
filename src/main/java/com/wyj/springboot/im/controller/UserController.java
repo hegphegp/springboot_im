@@ -81,7 +81,7 @@ public class UserController {
 //		return "test success!!";
 	}
 
-    @PostMapping(value = "login")
+    @PostMapping(value = "/login")
     public String login(HttpServletRequest request, HttpServletResponse response,
                         @RequestBody Map<String, String> model) {
         if (model == null) {
